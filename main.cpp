@@ -1,3 +1,11 @@
+/*
+  Autor: Anderson Altair Tomkelski
+  E-mail: ander.tomkelski@gmail.com
+
+  O seguinte programa tem como objetivo desenhar um braço robótico, formado por 4 cubos que, rotaciona
+  suas partes para direita e para a esquerda
+*/
+
 #include <GL/glut.h>
 #include <GL/gl.h>
 #include <iostream>
