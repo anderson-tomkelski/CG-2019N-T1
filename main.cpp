@@ -88,7 +88,7 @@ void display()
 	renderCoordinateAxis();
 
   // Render black cube
-  glPushMatrix();
+  /*glPushMatrix();
     glColor3f(black.r, black.g, black.b);
     glTranslatef(black.x, black.y, black.z);
     glutWireCube(black.size);
@@ -106,18 +106,32 @@ void display()
     glColor3f(green.r, green.g, green.b);
     glTranslatef(green.x, green.y, green.z);
     glutWireCube(green.size);
-  glPopMatrix();
+  glPopMatrix();*/
 
   // Render blue cube
-  glPushMatrix();
-    glColor3f(blue.r, blue.g, blue.b);
-    glTranslatef(blue.x, blue.y, blue.z);
-    glScalef(1, 2, 1);
-    glutWireCube(blue.size);
-  glPopMatrix();
+  glColor3f(blue.r, blue.g, blue.b);
+  glTranslatef(0, green.size / 2, 0);
+  glRotatef(blue.angle, 0, 0, 1);
+  glTranslatef(0, blue.size, 0);
+  glScalef(1, 2, 1);
+  glutWireCube(blue.size);
 
 	// Start the rendering on a new frame
 	glutSwapBuffers();
+}
+
+
+void update(int value)
+{
+	// Update the angle of rotation
+	//angle += 3;
+
+	// Request a new frame rendering
+	glutPostRedisplay();
+
+	// Re-schedule the update() function to be called after a few
+	// milliseconds again.
+	glutTimerFunc(UPDATE_INTERVAL_MS, update, 0);
 }
 
 
@@ -125,27 +139,34 @@ void keyboard(unsigned char key, int x, int y)
 {
   if (key == 'Q'){
     // Move red block to right
-    std::cout << "Red to right: " << key << std::endl;
+    if(red.angle >= -70)
+      red.angle -= 1;
   }
   if (key == 'A'){
     // Move red block to left
-    std::cout << "Red to left: " << key << std::endl;
+    if(red.angle <= 70)
+      red.angle += 1;
   }
   if (key == 'W'){
     // Move green block to right
-    std::cout << "Green to right: " << key << std::endl;
+    if(green.angle >= -70)
+      green.angle -= 1;
   }
   if (key == 'S'){
     // Move green block to left
-    std::cout << "Green to left: " << key << std::endl;
+    if(green.angle <= 70)
+      green.angle += 1;
+    
   }
   if (key == 'E'){
     // Move blue block to right
-    std::cout << "Blue to right: " << key << std::endl;
+    if(blue.angle >= -70)
+      blue.angle -= 1;
   }
   if (key == 'D'){
     // Move blue block to left
-    std::cout << "Blue to left: " << key << std::endl;
+    if(blue.angle <= 70)
+      blue.angle += 1;
   }
 
 	if (key == 27) {
@@ -185,6 +206,8 @@ int main(int argc, char** argv)
 	glutDisplayFunc(display);
 	glutKeyboardFunc(keyboard);
 	glutMouseFunc(mouse);
+
+  glutTimerFunc(UPDATE_INTERVAL_MS, update, 0);
 
 	initView();
 
