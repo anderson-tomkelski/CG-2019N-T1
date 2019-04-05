@@ -23,6 +23,7 @@ const unsigned int UPDATE_INTERVAL_MS = 1000 / FRAMES_PER_SECOND;
 class Cube {
 public:
   float x, y, z, angle;
+  float scaleX, scaleY, scaleZ;
   int r, g, b;
   float size;
 
@@ -35,6 +36,15 @@ public:
     this->g = g;
     this->b = b;
     this->size = size;
+  }
+
+  void display(Cube *downCube, float scaleY){
+    glColor3f(this->r, this->g, this->b);
+    glTranslatef(0, downCube->size / 2, 0);
+    glRotatef(this->angle, 0, 0, 1);
+    glTranslatef(0, scaleY * this->size / 2, 0);
+    glScalef(1, scaleY, 1);
+    glutWireCube(this->size);
   }
 };
 
@@ -87,32 +97,13 @@ void display()
 	// Render the X and Y axis to guide ourselves.
 	renderCoordinateAxis();
 
-  // Render black cube
-  glColor3f(black.r, black.g, black.b);
-  glTranslatef(0, black.size, 0);
-  glutWireCube(black.size);
+  black.display(&black, 1);
 
-  // Render red cube
-  glColor3f(red.r, red.g, red.b);
-  glTranslatef(0, black.size / 2, 0);
-  glRotatef(red.angle, 0, 0, 1);
-  glTranslatef(0, red.size / 2, 0);
-  glutWireCube(red.size);
+  red.display(&black, 1);
 
-  // Render green cube
-  glColor3f(green.r, green.g, green.b);
-  glTranslatef(0, red.size / 2, 0);
-  glRotatef(green.angle, 0, 0, 1);
-  glTranslatef(0, green.size / 2, 0);
-  glutWireCube(green.size);
+  green.display(&red, 1);
 
-  // Render blue cube
-  glColor3f(blue.r, blue.g, blue.b);
-  glTranslatef(0, green.size / 2, 0);
-  glRotatef(blue.angle, 0, 0, 1);
-  glTranslatef(0, blue.size, 0);
-  glScalef(1, 2, 1);
-  glutWireCube(blue.size);
+  blue.display(&green, 2);
 
 	// Start the rendering on a new frame
 	glutSwapBuffers();
