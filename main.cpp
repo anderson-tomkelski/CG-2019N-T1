@@ -24,7 +24,7 @@ class Cube {
 public:
   float x, y, z, angle;
   int r, g, b;
-  int size;
+  float size;
 
   Cube(float x, float y, float z, float angle, int r, int g, int b, int size){
     this->x = x;
@@ -95,18 +95,16 @@ void display()
   glPopMatrix();
 
   // Render red cube
-  glPushMatrix();
-    glColor3f(red.r, red.g, red.b);
-    glTranslatef(red.x, red.y, red.z);
-    glutWireCube(red.size);
-  glPopMatrix();
+  glColor3f(red.r, red.g, red.b);
+  glTranslatef(red.x, red.y, red.z);
+  glutWireCube(red.size);*/
 
   // Render green cube
-  glPushMatrix();
-    glColor3f(green.r, green.g, green.b);
-    glTranslatef(green.x, green.y, green.z);
-    glutWireCube(green.size);
-  glPopMatrix();*/
+  glColor3f(green.r, green.g, green.b);
+  glTranslatef(0, red.size / 2, 0);
+  glRotatef(green.angle, 0, 0, 1);
+  glTranslatef(0, green.size / 2, 0);
+  glutWireCube(green.size);
 
   // Render blue cube
   glColor3f(blue.r, blue.g, blue.b);
