@@ -123,6 +123,31 @@ void display()
 
 void keyboard(unsigned char key, int x, int y)
 {
+  if (key == 'Q'){
+    // Move red block to right
+    std::cout << "Red to right: " << key << std::endl;
+  }
+  if (key == 'A'){
+    // Move red block to left
+    std::cout << "Red to left: " << key << std::endl;
+  }
+  if (key == 'W'){
+    // Move green block to right
+    std::cout << "Green to right: " << key << std::endl;
+  }
+  if (key == 'S'){
+    // Move green block to left
+    std::cout << "Green to left: " << key << std::endl;
+  }
+  if (key == 'E'){
+    // Move blue block to right
+    std::cout << "Blue to right: " << key << std::endl;
+  }
+  if (key == 'D'){
+    // Move blue block to left
+    std::cout << "Blue to left: " << key << std::endl;
+  }
+
 	if (key == 27) {
 		// ESC key
 		exit(0);
