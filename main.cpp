@@ -24,15 +24,12 @@ float positionX = 0;
 
 class Cube {
 public:
-  float x, y, z, angle;
+  float angle;
   float scaleX, scaleY, scaleZ;
   int r, g, b;
   float size;
 
-  Cube(float x, float y, float z, float angle, int r, int g, int b, int size){
-    this->x = x;
-    this->y = y;
-    this->z = z;
+  Cube(float angle, int r, int g, int b, int size){
     this->angle = angle;
     this->r = r;
     this->g = g;
@@ -50,10 +47,10 @@ public:
   }
 };
 
-Cube black(0, 1, 0, 0, 0, 0, 0, 1);
-Cube red(0, 2, 0, 0, 1, 0, 0, 1);
-Cube green(0, 3, 0, 0, 0, 1, 0, 1);
-Cube blue(0, 4.5, 0, 0, 0, 0, 1, 1);
+Cube black(0, 0, 0, 0, 1);
+Cube red(0, 1, 0, 0, 1);
+Cube green(0, 0, 1, 0, 1);
+Cube blue(0, 0, 0, 1, 1);
 
 void renderCoordinateAxis()
 {
@@ -119,9 +116,6 @@ void display()
 
 void update(int value)
 {
-	// Update the angle of rotation
-	//angle += 3;
-
 	// Request a new frame rendering
 	glutPostRedisplay();
 
@@ -152,7 +146,6 @@ void keyboard(unsigned char key, int x, int y)
     // Move green block to left
     if(green.angle <= 70)
       green.angle += 1;
-    
   }
   if (key == 'E'){
     // Move blue block to right
@@ -173,7 +166,6 @@ void keyboard(unsigned char key, int x, int y)
     positionX += 1;
   }
 
-
 	if (key == 27) {
 		// ESC key
 		exit(0);
@@ -189,11 +181,6 @@ void arrows(int key, int x, int y){
     // Right arrow
     angleY += 1;
   }
-}
-
-void mouse(int button, int state, int x, int y)
-{
-	std::cout << "Mouse pressed: button=" << button << ", state=" << state << ", x=" << x << " y=" << y << std::endl;
 }
 
 void initView()
@@ -218,11 +205,10 @@ int main(int argc, char** argv)
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
 	glutInitWindowSize(WIDTH, HEIGHT);
-	glutCreateWindow("Transformation - Simple");
+	glutCreateWindow("Robotic Arm");
 	glutDisplayFunc(display);
 	glutKeyboardFunc(keyboard);
   glutSpecialFunc(arrows);
-	glutMouseFunc(mouse);
 
   glutTimerFunc(UPDATE_INTERVAL_MS, update, 0);
 
