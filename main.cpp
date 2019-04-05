@@ -21,6 +21,7 @@ const unsigned int UPDATE_INTERVAL_MS = 1000 / FRAMES_PER_SECOND;
 
 float angleY = 0;
 float positionX = 0;
+float claw = 0;
 
 class Cube {
 public:
@@ -42,8 +43,10 @@ public:
     glTranslatef(0, downCube->size / 2, 0);
     glRotatef(this->angle, 0, 0, 1);
     glTranslatef(0, scaleY * this->size / 2, 0);
-    glScalef(1, scaleY, 1);
-    glutWireCube(this->size);
+    glPushMatrix();
+      glScalef(1, scaleY, 1);
+      glutWireCube(this->size);
+    glPopMatrix();
   }
 };
 
@@ -109,6 +112,26 @@ void display()
 
   blue.display(&green, 2);
 
+  // Adding left claw
+  glPushMatrix();
+    glColor3f(0.5, 0.5, 0.5);
+    glTranslatef(-blue.size / 2 + 0.15, blue.size, 0);
+    glRotatef(claw, 0, 0, 1);
+    glTranslatef(0, 0.45, 0);
+    glScalef(1, 3, 1);
+    glutWireCube(0.3);
+  glPopMatrix();
+
+  // Adding right claw
+  glPushMatrix();
+    glColor3f(0.5, 0.5, 0.5);
+    glTranslatef(blue.size / 2 - 0.15, blue.size, 0);
+    glRotatef(-claw, 0, 0, 1);
+    glTranslatef(0, 0.45, 0);
+    glScalef(1, 3, 1);
+    glutWireCube(0.3);
+  glPopMatrix();
+
 	// Start the rendering on a new frame
 	glutSwapBuffers();
 }
@@ -127,43 +150,51 @@ void update(int value)
 
 void keyboard(unsigned char key, int x, int y)
 {
-  if (key == 'Q'){
+  if (key == 'Q' || key == 'q'){
     // Move red block to right
     if(red.angle >= -70)
       red.angle -= 1;
   }
-  if (key == 'A'){
+  if (key == 'A' || key == 'a'){
     // Move red block to left
     if(red.angle <= 70)
       red.angle += 1;
   }
-  if (key == 'W'){
+  if (key == 'W' || key == 'w'){
     // Move green block to right
     if(green.angle >= -70)
       green.angle -= 1;
   }
-  if (key == 'S'){
+  if (key == 'S' || key == 's'){
     // Move green block to left
     if(green.angle <= 70)
       green.angle += 1;
   }
-  if (key == 'E'){
+  if (key == 'E' || key == 'e'){
     // Move blue block to right
     if(blue.angle >= -70)
       blue.angle -= 1;
   }
-  if (key == 'D'){
+  if (key == 'D' || key == 'd'){
     // Move blue block to left
     if(blue.angle <= 70)
       blue.angle += 1;
   }
-  if (key == 'Z') {
+  if (key == 'Z' || key == 'z') {
     // Move arm to left
     positionX -= 1;
   }
-  if (key == 'X') {
+  if (key == 'X' || key == 'x') {
     // Move arm to right
     positionX += 1;
+  }
+  if (key == 'R' || key == 'r'){
+    if(claw <= 15)
+      claw += 1;
+  }
+  if (key == 'F' || key == 'f'){
+    if(claw >= -15)
+      claw -= 1;
   }
 
 	if (key == 27) {
