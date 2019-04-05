@@ -19,6 +19,8 @@ const int HEIGHT = 800;
 const unsigned int FRAMES_PER_SECOND = 30;
 const unsigned int UPDATE_INTERVAL_MS = 1000 / FRAMES_PER_SECOND;
 
+float angleY = 0;
+float positionX = 0;
 
 class Cube {
 public:
@@ -94,8 +96,13 @@ void display()
 	// Move the camera away from the origin along the Z axis by 10 pixels.
 	glTranslatef(0, 0, -10.0f);
 
+  // Rotate under Y axis
+  glRotatef(angleY, 0, 1, 0);
+
 	// Render the X and Y axis to guide ourselves.
 	renderCoordinateAxis();
+
+  glTranslatef(positionX, 0, 0);
 
   black.display(&black, 1);
 
@@ -157,11 +164,31 @@ void keyboard(unsigned char key, int x, int y)
     if(blue.angle <= 70)
       blue.angle += 1;
   }
+  if (key == 'Z') {
+    // Move arm to left
+    positionX -= 1;
+  }
+  if (key == 'X') {
+    // Move arm to right
+    positionX += 1;
+  }
+
 
 	if (key == 27) {
 		// ESC key
 		exit(0);
 	}
+}
+
+void arrows(int key, int x, int y){
+  if(key == 100){
+    // Left arrow
+    angleY -= 1;
+  }
+  if(key == 102){
+    // Right arrow
+    angleY += 1;
+  }
 }
 
 void mouse(int button, int state, int x, int y)
@@ -194,6 +221,7 @@ int main(int argc, char** argv)
 	glutCreateWindow("Transformation - Simple");
 	glutDisplayFunc(display);
 	glutKeyboardFunc(keyboard);
+  glutSpecialFunc(arrows);
 	glutMouseFunc(mouse);
 
   glutTimerFunc(UPDATE_INTERVAL_MS, update, 0);
