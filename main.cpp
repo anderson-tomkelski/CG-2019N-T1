@@ -88,16 +88,16 @@ void display()
 	renderCoordinateAxis();
 
   // Render black cube
-  /*glPushMatrix();
-    glColor3f(black.r, black.g, black.b);
-    glTranslatef(black.x, black.y, black.z);
-    glutWireCube(black.size);
-  glPopMatrix();
+  glColor3f(black.r, black.g, black.b);
+  glTranslatef(0, black.size, 0);
+  glutWireCube(black.size);
 
   // Render red cube
   glColor3f(red.r, red.g, red.b);
-  glTranslatef(red.x, red.y, red.z);
-  glutWireCube(red.size);*/
+  glTranslatef(0, black.size / 2, 0);
+  glRotatef(red.angle, 0, 0, 1);
+  glTranslatef(0, red.size / 2, 0);
+  glutWireCube(red.size);
 
   // Render green cube
   glColor3f(green.r, green.g, green.b);
